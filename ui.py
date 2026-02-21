@@ -8,6 +8,8 @@ from typing import Optional
 from command_processor import CommandProcessor
 from Profile import Profile, Post, DsuFileError, DsuProfileError
 
+import ds_client
+
 
 class UI:
     def __init__(self) -> None:
@@ -235,6 +237,46 @@ class UI:
                 return
 
     #
+    # Publish Post
+    #
+    def _publish_post(self, index: int) -> None:
+        prof = self.current_profile
+
+        if prof is None:
+            print("ERROR")
+            return
+
+        if prof.dsuserver is None or prof.dsuserver.strip() == "":
+            print("ERROR")
+            return
+
+        posts = prof.get_posts()
+        if index < 0 or index >= len(posts):
+            print("ERROR")
+            return
+
+        post = posts[index]
+
+        # no empty/whitespace posts
+        if post.entry is None or post.entry.strip() == "":
+            print("ERROR")
+            return
+
+        ok = ds_client.send(
+            prof.dsuserver,
+            2021,
+            prof.username,
+            prof.password,
+            prof.entry,
+            prof.bio
+        )
+
+        if ok:
+            print("PUBLISHED")
+        else:
+            print("ERROR")
+
+    #
     # Core Command Processing
     #
     def _process_line(self, line: str) -> bool:
@@ -256,7 +298,7 @@ class UI:
         cmd = parts[0].upper()
 
         path_commands = {"L", "C", "D", "R", "O"}
-        no_path_commands = {"E", "P"}
+        no_path_commands = {"E", "P", "PUB"}
 
         if cmd in path_commands:
             if len(parts) < 2:
@@ -282,6 +324,20 @@ class UI:
         if cmd in no_path_commands:
             if self.current_profile is None or self.current_path is None:
                 print("ERROR")
+                return True
+
+            if cmd == "PUB":
+                if len(parts) != 2:
+                    print("ERROR")
+                    return True
+
+                try:
+                    idx = int(parts[1]) - 1
+                except ValueError:
+                    print("ERROR")
+                    return True
+
+                self._publish_post(idx)
                 return True
 
             options = parts[1:]
