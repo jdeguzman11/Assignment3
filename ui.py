@@ -267,7 +267,7 @@ class UI:
             2021,
             prof.username,
             prof.password,
-            prof.entry,
+            post.entry,
             prof.bio
         )
 

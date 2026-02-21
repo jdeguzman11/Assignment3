@@ -1,0 +1,3 @@
+This program is a local journaling application that allows users to create, edit, and manage journal entries stored in .dsu files. Each profile stores a username, password, bio, posts, and the DSP server address used for publishing.
+
+The program also supports publishing journal entries to the ICS32 Distributed Social Platform (DSP) server. Users can publish saved posts using the PUB command. The client connects to the DSP server over network sockets, performs authentication using the DSP JSON protocol, retrieves an authentication token, and transmits the selected journal entry. All networking operations include proper error handling.

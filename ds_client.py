@@ -71,6 +71,9 @@ def send(
     if sock is None:
         return False
 
+    send_file = None
+    recv_file = None
+
     try:
         send_file = sock.makefile("w", encoding="utf-8", newline="")
         recv_file = sock.makefile("r", encoding="utf-8", newline="")
@@ -79,7 +82,8 @@ def send(
         join_msg = {
             "join": {
                 "username": username,
-                "password": password
+                "password": password,
+                "token": ""
             }
         }
 
@@ -91,7 +95,7 @@ def send(
             return False
 
         token = join_resp.token
-        if token is None or token == "":
+        if not token:
             return False
 
         # post
@@ -104,12 +108,12 @@ def send(
                 }
             }
 
-        if not _send_json(send_file, post_msg):
-            return False
+            if not _send_json(send_file, post_msg):
+                return False
 
-        post_resp = _recv_response(recv_file)
-        if post_resp.type != "ok":
-            return False
+            post_resp = _recv_response(recv_file)
+            if post_resp.type != "ok":
+                return False
 
         # bio
         if not _is_blank(bio):
