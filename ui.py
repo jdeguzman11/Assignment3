@@ -52,6 +52,9 @@ class UI:
 
             print("bio:")
             bio = input().strip()
+
+            print("server:")
+            dsuserver = input().strip()
         except EOFError:
             return None
 
@@ -61,11 +64,14 @@ class UI:
             return None
         if bio.strip() == "":
             return None
+        if dsuserver.strip() == "":
+            return None
 
         prof = Profile()
         prof.username = username
         prof.password = password
         prof.bio = bio
+        prof.dsuserver = dsuserver
         return prof
 
     @staticmethod
