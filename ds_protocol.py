@@ -22,5 +22,5 @@ def extract_json(json_msg: str) -> DataTuple:
 
     except (KeyError, TypeError):
         return DataTuple(None, None)
-    
+
     return DataTuple(type, token)
