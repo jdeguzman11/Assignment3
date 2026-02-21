@@ -7,15 +7,14 @@
 import json
 from collections import namedtuple
 
-DataTuple = namedtuple("DateTuple", ["type", "token"])
+DataTuple = namedtuple("DataTuple", ["type", "token"])
 
 
 def extract_json(json_msg: str) -> DataTuple:
     try:
         json_obj = json.loads(json_msg)
         type = json_obj["response"]["type"]
-        token = json_obj["response"]["message"]
-        return DataTuple(type, token)
+        token = json_obj["response"].get("token", "")
 
     except json.JSONDecodeError:
         print("Json cannot be decoded.")
@@ -23,3 +22,5 @@ def extract_json(json_msg: str) -> DataTuple:
 
     except (KeyError, TypeError):
         return DataTuple(None, None)
+    
+    return DataTuple(type, token)
