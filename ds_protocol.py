@@ -15,8 +15,11 @@ def extract_json(json_msg: str) -> DataTuple:
         json_obj = json.loads(json_msg)
         type = json_obj["response"]["type"]
         token = json_obj["response"]["message"]
+        return DataTuple(type, token)
+
     except json.JSONDecodeError:
         print("Json cannot be decoded.")
         return DataTuple(None, None)
 
-    return DataTuple(type, token)
+    except (KeyError, TypeError):
+        return DataTuple(None, None)
