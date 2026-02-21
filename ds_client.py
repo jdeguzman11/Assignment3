@@ -7,6 +7,7 @@
 import socket
 from typing import Optional
 import json
+import time
 
 
 def _connect(host: str, port: int) -> Optional[socket.socket]:
@@ -25,6 +26,17 @@ def _send_json(sock: socket.socket, message: dict) -> bool:
         return True
     except Exception:
         return False
+
+
+def _recv_json(sock: socket.socket) -> Optional[dict]:
+    try:
+        file = sock.makefile("r")
+        line = file.readline()
+        if not line:
+            return None
+        return json.loads(line)
+    except Exception:
+        return None
 
 
 def send(
