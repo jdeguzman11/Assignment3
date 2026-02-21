@@ -12,17 +12,17 @@ import time
 
 def _connect(host: str, port: int) -> Optional[socket.socket]:
     try:
-        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        s.connect((host, port))
-        return s
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.connect((host, port))
+        return sock
     except Exception:
         return None
 
 
 def _send_json(sock: socket.socket, message: dict) -> bool:
     try:
-        data = json.dummps(message).encode("utf-8")
-        sock.sendall(data)
+        json_msg = json.dumps(message) + "\r\n"
+        sock.sendall(json_msg.encode("utf-8"))
         return True
     except Exception:
         return False
@@ -30,11 +30,8 @@ def _send_json(sock: socket.socket, message: dict) -> bool:
 
 def _recv_json(sock: socket.socket) -> Optional[dict]:
     try:
-        file = sock.makefile("r")
-        line = file.readline()
-        if not line:
-            return None
-        return json.loads(line)
+        data = sock.recv(4096).decode("utf-8")
+        return json.loads(data)
     except Exception:
         return None
 
@@ -60,13 +57,41 @@ def send(
     if sock is None:
         return False
 
-    try:
-        if not _send_json(sock, message):
-            return False
-    finally:
-        try:
-            sock.close()
-        except Exception:
-            pass
+    # join request
+    join_msg = {
+        "join": {
+            "username": username,
+            "password": password
+        }
+    }
 
+    if not _send_json(sock, join_msg):
+        sock.close()
+        return False
+
+    join_resp = _recv_json(sock)
+    if join_resp is None:
+        sock.close()
+        return False
+
+    # send post message
+    post_msg = {
+        "post": {
+            "entry": message
+        }
+    }
+
+    if bio is not None:
+        post_msg["post"]["bio"] = bio
+
+    if not _send_json(sock, post_msg):
+        sock.close()
+        return False
+
+    post_resp = _recv_json(sock)
+    if post_resp is None:
+        sock.close()
+        return False
+
+    sock.close()
     return True
