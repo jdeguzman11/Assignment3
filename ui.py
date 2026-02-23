@@ -4,7 +4,7 @@
 
 # ui.py
 
-from shlex import split
+from shlex import split, quote
 from pathlib import Path
 from typing import Optional
 from command_processor import CommandProcessor
@@ -53,12 +53,20 @@ class UI:
         print()
         print("Before publishing, confirm these settings:")
         print(f"  Username: {prof.username}")
-        print(f"  Password: {'*' * len(prof.password) if prof.password else '(none)'}")
+        masked_password = (
+            "*" * len(prof.password)
+            if prof.password
+            else "(none)"
+        )
+        print(f"  Password: {masked_password}")
         print(f"  Bio:      {prof.bio}")
         print(f"  Server:   {server if server else '(missing)'}")
         print()
 
-        if not self._ask_yes_no("Do you want to edit any of these before publishing?", default="n"):
+        if not self._ask_yes_no(
+            "Do you want to edit any of these before publishing?",
+            default="n",
+        ):
             return True
 
         # username
@@ -564,7 +572,7 @@ class UI:
                 return ""
             if text == "":
                 return ""
-            return f'E -addpost {text}'
+            return f'E -addpost {quote(text)}'
 
         if c == "5":
             try:
