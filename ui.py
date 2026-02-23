@@ -381,12 +381,12 @@ class UI:
             print("4) Add a Post                 (E -addpost)")
             print("5) Delete a Post              (E -delpost)")
             print("6) Publish a Post             (PUB <#>)")
-            print("7) Open Another Profile       (O <path_to_dsu>")
+            print("7) Open Another Profile       (O <path_to_dsu>)")
             print("8) Quit                       (Q)")
             print()
 
     def _user_choice_to_command(self, choice: str) -> str:
-        c = choice.strip
+        c = choice.strip()
         loaded = (self.current_profile is not None and self.current_path is not None)
 
         if not loaded:
@@ -430,6 +430,16 @@ class UI:
                 text = input("Post text: ").strip()
             except EOFError:
                 return ""
+            if text == "":
+                return ""
+            return f'E -addpost {text}'
+        if c == "5":
+            try:
+                text = input("Post number to delete: ").strip()
+            except EOFError:
+                return ""
+            if num == "":
+                return ""
             return f'E -delpost {num}'
         if c == "6":
             try:
@@ -464,7 +474,7 @@ class UI:
 
         while True:
             self._user_banner()
-            self._user_menu
+            self._user_menu()
 
             try:
                 line = input("> ")
