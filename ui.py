@@ -385,6 +385,73 @@ class UI:
             print("8) Quit                       (Q)")
             print()
 
+    def _user_choice_to_command(self, choice: str) -> str:
+        c = choice.strip
+        loaded = (self.current_profile is not None and self.current_path is not None)
+
+        if not loaded:
+            if c == "1":
+                try:
+                    directory = input("Directory: ").strip()
+                    name = input("Name (without .dsu allowed): ").strip()
+                except EOFError:
+                    return ""
+                if directory == "" or name == "":
+                    return ""
+                return f'C {directory} -n {name}'
+
+            if c == "2":
+                try:
+                    path = input("Path to .dsu: ").strip()
+                except EOFError:
+                    return ""
+                if path == "":
+                    return ""
+                return f'O {path}'
+
+            if c == "3":
+                return "Q"
+            return choice
+
+        if c == "1":
+            return "P -all"
+        if c == "2":
+            return "P -posts"
+        if c == "3":
+            try:
+                num = input("Post number: ").strip()
+            except EOFError:
+                return ""
+            if num == "":
+                return ""
+            return f'P -post {num}'
+        if c == "4":
+            try:
+                text = input("Post text: ").strip()
+            except EOFError:
+                return ""
+            return f'E -delpost {num}'
+        if c == "6":
+            try:
+                num = input("Post number to publish: ").strip()
+            except EOFError:
+                return ""
+            if num == "":
+                return ""
+            return f'PUB {num}'
+        if c == "7":
+            try:
+                path = input("Path to .dsu: ").strip()
+            except EOFError:
+                return ""
+            if path == "":
+                return ""
+            return f"O {path}"
+        if c == "8":
+            return "Q"
+
+        return choice
+
     #
     # Admin / Friendly Loop
     #
