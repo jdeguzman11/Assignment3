@@ -99,7 +99,8 @@ class UI:
             pass
 
     @staticmethod
-    def _split_path_and_options(tokens: list[str]) -> tuple[Optional[str], list[str]]:
+    def _split_path_and_options(tokens: list[str]) -> \
+            tuple[Optional[str], list[str]]:
         if not tokens:
             return None, []
 
@@ -369,50 +370,60 @@ class UI:
         print()
 
     def _user_menu(self) -> None:
-        loaded = (self.current_profile is not None and self.current_path is not None)
+        loaded = (self.current_profile is not None
+                  and self.current_path is not None)
 
         print("Commands Available at Anytime:")
-        print("  L <dir> [-f] [-r] [-s <name>] [-e <ext>]  List Directory Contents (recursively with -r)")
-        print("  C <dir> -n <name>                         Create/Load DSU Profile")
+        print(
+            "  L <dir> [-f] [-r] [-s <name>] [-e <ext>]  List Directory "
+            "Contents (recursively with -r)"
+        )
+        print(
+            "  C <dir> -n <name>"
+            "                         Create/Load DSU Profile")
         print("  O <path_to_dsu>                           Open DSU Profile ")
         print("  D <path_to_dsu>                           Delete DSU Profile")
-        print("  R <path_to_dsu>                           Read/Print a .dsu File")
+        print(
+            "  R <path_to_dsu>                           "
+            "Read/Print a .dsu File")
         print("  Q                                         Quit")
         print()
 
         if not loaded:
-            print()
-            print("Profile commands (requires a loaded profile):")
-            print("  P -usr | -pwd | -bio | -posts | -post <#> | -all")
-            print("  E -usr <u> -pwd <p> -bio <b> -addpost \"...\" -delpost <#>")
-            print("  PUB <#>")
-            print()
-
-            print("Quick actions:")
-            print("  1) Create Profile (C <directory> -n <name>)")
-            print("  2) Open Profile   (O <path_to_dsu>)")
-            print("  3) List Directory (L <dir> ...)")
-            print("  4) Quit           (Q)")
+            print("Quick Actions:")
+            print("  Create Profile (C <directory> -n <name>)")
+            print("  Open Profile   (O <path_to_dsu>)")
+            print("  List Directory (L <dir> ...)")
+            print("  Quit           (Q)")
             print()
 
         else:
-            print("Quick actions (profile loaded):")
-            print("  1) View All Profile Info      (P -all)")
-            print("  2) View Posts List            (P -posts)")
-            print("  3) View One Post              (P -post <#>)")
-            print("  4) Add a Post                 (E -addpost \"...\")")
-            print("  5) Delete a Post              (E -delpost <#>)")
-            print("  6) Publish a Post             (PUB <#>)")
-            print("  7) List Directory             (L <dir> ...)")
-            print("  8) Delete a DSU file          (D <path_to_dsu>)")
-            print("  9) Read a DSU file            (R <path_to_dsu>)")
-            print(" 10) Open Another Profile       (O <path_to_dsu>)")
-            print(" 11) Quit                       (Q)")
+            print("Profile Commands (requires a loaded profile):")
+            print("  P -usr | -pwd | -bio | -posts | -post <#> | -all")
+            print(
+                "  E -usr <u> -pwd <p> -bio <b> -addpost \"...\" "
+                "  -delpost <#>")
+            print("  PUB <#>")
+            print()
+
+            print("Quick Actions:")
+            print("  View All Profile Info      (P -all)")
+            print("  View Posts List            (P -posts)")
+            print("  View One Post              (P -post <#>)")
+            print("  Add a Post                 (E -addpost \"...\")")
+            print("  Delete a Post              (E -delpost <#>)")
+            print("  Publish a Post             (PUB <#>)")
+            print("  List Directory             (L <dir> ...)")
+            print("  Delete a DSU file          (D <path_to_dsu>)")
+            print("  Read a DSU file            (R <path_to_dsu>)")
+            print("  Open Another Profile       (O <path_to_dsu>)")
+            print("  Quit                       (Q)")
             print()
 
     def _user_choice_to_command(self, choice: str) -> str:
         c = choice.strip()
-        loaded = (self.current_profile is not None and self.current_path is not None)
+        loaded = (self.current_profile is not None and
+                  self.current_path is not None)
 
         if not loaded:
             if c == "1":

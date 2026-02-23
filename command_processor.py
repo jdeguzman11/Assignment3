@@ -11,7 +11,11 @@ import sys
 class CommandProcessor:
 
     # defining function that handles what command function to call
-    def handle(self, command: str, path: str, options: list[str] | None) -> None:
+    def handle(
+            self,
+            command: str,
+            path: str,
+            options: list[str] | None) -> None:
         if options is None:
             options = []
 
@@ -61,7 +65,11 @@ class CommandProcessor:
                 self._list(str(d), options)
 
     # defining function for -s option
-    def _list_search(self, files: list[Path], dirs: list[Path], options: list[str]) -> None:
+    def _list_search(
+            self,
+            files: list[Path],
+            dirs: list[Path],
+            options: list[str]) -> None:
         try:
             name = options[options.index("-s") + 1]
         except (ValueError, IndexError):
@@ -77,7 +85,11 @@ class CommandProcessor:
                 self._list(str(d), options)
 
     # defining function for -e option
-    def _list_extension(self, files: list[Path], dirs: list[Path], options: list[str]) -> None:
+    def _list_extension(
+            self,
+            files: list[Path],
+            dirs: list[Path],
+            options: list[str]) -> None:
         try:
             ext = options[options.index("-e") + 1]
         except (ValueError, IndexError):
@@ -129,7 +141,11 @@ class CommandProcessor:
     def _delete(self, path: str) -> None:
         path_obj = Path(path)
 
-        if not path_obj.exists() or not path_obj.is_file() or path_obj.suffix != ".dsu":
+        if (
+            not path_obj.exists()
+            or not path_obj.is_file()
+            or path_obj.suffix != ".dsu"
+        ):
             print("ERROR")
             return
 
@@ -144,7 +160,11 @@ class CommandProcessor:
     def _read(self, path: str) -> None:
         path_obj = Path(path)
 
-        if not path_obj.exists() or not path_obj.is_file() or path_obj.suffix != ".dsu":
+        if (
+            not path_obj.exists()
+            or not path_obj.is_file()
+            or path_obj.suffix != ".dsu"
+        ):
             print("ERROR")
             return
 
