@@ -20,6 +20,17 @@ class UI:
         self.current_profile: Optional[Profile] = None
         self.in_admin_mode: bool = False
 
+    def _ask_yes_no(self, prompt: str, default: str = "n") -> bool:
+        try:
+            suffix = " [Y/n]: " if default.lower() == "y" else " [y/N]: "
+            ans = input(prompt + suffix).strip().lower()
+        except EOFError:
+            return False
+        if ans == "":
+            ans = default.lower()
+        return ans in {"y", "yes"}
+    
+    
     @staticmethod
     def _get_option_value(options: list[str], flag: str) -> Optional[str]:
         if flag not in options:
