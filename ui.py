@@ -370,7 +370,7 @@ class UI:
         loaded = (self.current_profile is not None and self.current_path is not None)
 
         if not loaded:
-            print("1) Create Profile (C <directory> -n <name)")
+            print("1) Create Profile (C <directory> -n <name>)")
             print("2) Open Profile   (O <path_to_dsu>)")
             print("3) Quit           (Q)")
             print()
