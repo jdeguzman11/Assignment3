@@ -29,8 +29,17 @@ class UI:
         if ans == "":
             ans = default.lower()
         return ans in {"y", "yes"}
-    
-    
+
+    def _prompt_nonempty(self, label: str) -> Optional[str]:
+        while True:
+            try:
+                val = input(label).strip()
+            except EOFError:
+                return None
+            if val != "":
+                return val
+            print("Please enter a value (cannot be blank).")
+
     @staticmethod
     def _get_option_value(options: list[str], flag: str) -> Optional[str]:
         if flag not in options:
