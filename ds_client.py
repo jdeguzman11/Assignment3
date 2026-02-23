@@ -1,8 +1,8 @@
-# ds_client.py
-
 # Justin DeGuzman
 # justicd1@uci.edu
 # 72329664
+
+# ds_client.py
 
 import socket
 from typing import Optional, TextIO
