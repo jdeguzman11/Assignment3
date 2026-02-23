@@ -354,6 +354,19 @@ class UI:
         return True
 
     #
+    # User Mode UI
+    #
+    def _user_banner(self) -> None:
+        print()
+        print("----DSU Profile Manager----")
+        if self.current_path:
+            print(f"Loaded: {self.current_path}")
+        else:
+            print("Loaded: (none)")
+        print("Type a command or choose an option below.")
+        print()
+
+    #
     # Admin / Friendly Loop
     #
     def run_friendly(self, first_choice: str = "") -> None:
