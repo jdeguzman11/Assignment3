@@ -463,12 +463,22 @@ class UI:
                 return
 
         while True:
+            self._user_banner()
+            self._user_menu
+
             try:
                 line = input("> ")
             except EOFError:
                 break
 
-            if not self._process_line(line):
+            if line.strip() == "":
+                continue
+
+            cmd_line = self._user_choice_to_command(line)
+            if cmd_line.strip() == "":
+                continue
+
+            if not self._process_line(cmd_line):
                 break
 
     def run_admin(self) -> None:
