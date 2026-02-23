@@ -40,6 +40,63 @@ class UI:
                 return val
             print("Please enter a value (cannot be blank).")
 
+    def _edit_publish_settings_flow(self) -> bool:
+        prof = self.current_profile
+        path = self.current_path
+
+        if prof is None or path is None:
+            print("ERROR")
+            return False
+
+        server = getattr(prof, "dsusever", "")
+
+        print()
+        print("Before publishing, confirm these settings:")
+        print(f"  Username: {prof.username}")
+        print(f"  Password: {'*' * len(prof.password) if prof.password else '(none)'}")
+        print(f"  Bio:      {prof.bio}")
+        print(f"  Server:   {server if server else '(missing)'}")
+        print()
+
+        if not self._ask_yes_no("Do you want to edit any of these before publishing?", default="n"):
+            return True
+
+        # username
+        if self._ask_yes_no("Edit username?", default="n"):
+            u = self._prompt_nonempty("New username: ")
+            if u is None:
+                return False
+            self._edit_profile(["-usr", u])
+
+        # password
+        if self._ask_yes_no("Edit password?", default="n"):
+            p = self._prompt_nonempty("New password: ")
+            if p is None:
+                return False
+            self._edit_profile(["-pwd", p])
+
+        # bio
+        if self._ask_yes_no("Edit bio?", default="n"):
+            b = self._prompt_nonempty("New bio: ")
+            if b is None:
+                return False
+            self._edit_profile(["-bio", b])
+
+        # server
+        if self._ask_yes_no("Edit server?", default="n"):
+            s = self._prompt_nonempty("New server: ")
+            if s is None:
+                return False
+            prof.dsuserver = s
+            try:
+                prof.save_profile(path)
+                print("UPDATED server.")
+            except DsuFileError:
+                print("ERROR")
+                return False
+
+        return True
+
     @staticmethod
     def _get_option_value(options: list[str], flag: str) -> Optional[str]:
         if flag not in options:
@@ -359,6 +416,11 @@ class UI:
                 except ValueError:
                     print("ERROR")
                     return True
+
+                if not self.in_admin_mode:
+                    if not self._edit_publish_settings_flow():
+                        print("ERROR")
+                        return True
 
                 self._publish_post(idx)
                 return True
