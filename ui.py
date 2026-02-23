@@ -366,6 +366,25 @@ class UI:
         print("Type a command or choose an option below.")
         print()
 
+    def _user_menu(self) -> None:
+        loaded = (self.current_profile is not None and self.current_path is not None)
+
+        if not loaded:
+            print("1) Create Profile (C <directory> -n <name)")
+            print("2) Open Profile   (O <path_to_dsu>)")
+            print("3) Quit           (Q)")
+            print()
+        else:
+            print("1) View All Profile Info      (P -all)")
+            print("2) View Posts List            (P -posts)")
+            print("3) View One Post              (P -post <#>)")
+            print("4) Add a Post                 (E -addpost)")
+            print("5) Delete a Post              (E -delpost)")
+            print("6) Publish a Post             (PUB <#>)")
+            print("7) Open Another Profile       (O <path_to_dsu>")
+            print("8) Quit                       (Q)")
+            print()
+
     #
     # Admin / Friendly Loop
     #
