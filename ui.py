@@ -382,7 +382,7 @@ class UI:
 
         if not loaded:
             print()
-            print("Profile commands (require a loaded profile):")
+            print("Profile commands (requires a loaded profile):")
             print("  P -usr | -pwd | -bio | -posts | -post <#> | -all")
             print("  E -usr <u> -pwd <p> -bio <b> -addpost \"...\" -delpost <#>")
             print("  PUB <#>")
