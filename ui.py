@@ -431,13 +431,26 @@ class UI:
                 return f'O {path}'
 
             if c == "3":
+                try:
+                    directory = input("Directory to list: ").strip()
+                    opts = input("Options: ").strip()
+                except EOFError:
+                    return ""
+                if directory == "":
+                    return ""
+                return f'L {directory} {opts}'.strip()
+
+            if c == "4":
                 return "Q"
+
             return choice
 
         if c == "1":
             return "P -all"
+
         if c == "2":
             return "P -posts"
+
         if c == "3":
             try:
                 num = input("Post number: ").strip()
@@ -446,6 +459,7 @@ class UI:
             if num == "":
                 return ""
             return f'P -post {num}'
+
         if c == "4":
             try:
                 text = input("Post text: ").strip()
@@ -454,14 +468,16 @@ class UI:
             if text == "":
                 return ""
             return f'E -addpost {text}'
+
         if c == "5":
             try:
-                text = input("Post number to delete: ").strip()
+                num = input("Post number to delete: ").strip()
             except EOFError:
                 return ""
             if num == "":
                 return ""
             return f'E -delpost {num}'
+
         if c == "6":
             try:
                 num = input("Post number to publish: ").strip()
@@ -470,7 +486,36 @@ class UI:
             if num == "":
                 return ""
             return f'PUB {num}'
+
         if c == "7":
+            try:
+                directory = input("Directory to list: ").strip()
+                opts = input("Options: ").strip()
+            except EOFError:
+                return ""
+            if directory == "":
+                return ""
+            return f'L {directory} {opts}'.strip()
+
+        if c == "8":
+            try:
+                path = input("Path to .dsu to delete: ").strip()
+            except EOFError:
+                return ""
+            if path == "":
+                return ""
+            return f"D {path}"
+
+        if c == "9":
+            try:
+                path = input("Path to .dsu to read: ").strip()
+            except EOFError:
+                return ""
+            if path == "":
+                return ""
+            return f"R {path}"
+
+        if c == "10":
             try:
                 path = input("Path to .dsu: ").strip()
             except EOFError:
@@ -478,7 +523,8 @@ class UI:
             if path == "":
                 return ""
             return f"O {path}"
-        if c == "8":
+
+        if c == "11":
             return "Q"
 
         return choice
