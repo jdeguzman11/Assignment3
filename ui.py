@@ -376,8 +376,10 @@ class UI:
         print("  D <path_to_dsu>                           Delete DSU Profile")
         print("  R <path_to_dsu>                           Read/Print a .dsu File")
         print("  Q                                         Quit")
+        print()
 
         if not loaded:
+            print()
             print("Profile commands (require a loaded profile):")
             print("  P -usr | -pwd | -bio | -posts | -post <#> | -all")
             print("  E -usr <u> -pwd <p> -bio <b> -addpost \"...\" -delpost <#>")
