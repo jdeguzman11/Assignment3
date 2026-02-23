@@ -48,7 +48,7 @@ class UI:
             print("ERROR")
             return False
 
-        server = getattr(prof, "dsusever", "")
+        server = getattr(prof, "dsuserver", "")
 
         print()
         print("Before publishing, confirm these settings:")
@@ -480,11 +480,11 @@ class UI:
         print()
 
         if not loaded:
-            print("Quick Actions:")
-            print("  Create Profile (C <directory> -n <name>)")
-            print("  Open Profile   (O <path_to_dsu>)")
-            print("  List Directory (L <dir> ...)")
-            print("  Quit           (Q)")
+            print("Quick Actions (enter number):")
+            print("  1. Create Profile (C <directory> -n <name>)")
+            print("  2. Open Profile   (O <path_to_dsu>)")
+            print("  3. List Directory (L <dir> ...)")
+            print("  4. Quit           (Q)")
             print()
 
         else:
@@ -496,18 +496,18 @@ class UI:
             print("  PUB <#>")
             print()
 
-            print("Quick Actions:")
-            print("  View All Profile Info      (P -all)")
-            print("  View Posts List            (P -posts)")
-            print("  View One Post              (P -post <#>)")
-            print("  Add a Post                 (E -addpost \"...\")")
-            print("  Delete a Post              (E -delpost <#>)")
-            print("  Publish a Post             (PUB <#>)")
-            print("  List Directory             (L <dir> ...)")
-            print("  Delete a DSU file          (D <path_to_dsu>)")
-            print("  Read a DSU file            (R <path_to_dsu>)")
-            print("  Open Another Profile       (O <path_to_dsu>)")
-            print("  Quit                       (Q)")
+            print("Quick Actions (enter number):")
+            print("  1. View All Profile Info      (P -all)")
+            print("  2. View Posts List            (P -posts)")
+            print("  3. View One Post              (P -post <#>)")
+            print("  4. Add a Post                 (E -addpost \"...\")")
+            print("  5. Delete a Post              (E -delpost <#>)")
+            print("  6. Publish a Post             (PUB <#>)")
+            print("  7. List Directory             (L <dir> ...)")
+            print("  8. Delete a DSU file          (D <path_to_dsu>)")
+            print("  9. Read a DSU file            (R <path_to_dsu>)")
+            print("  10. Open Another Profile      (O <path_to_dsu>)")
+            print("  11. Quit                      (Q)")
             print()
 
     def _user_choice_to_command(self, choice: str) -> str:
